@@ -192,6 +192,7 @@ function init() {
     const intro = localStorage.getItem("intro")
     const gban = localStorage.getItem("gban")
 
+    const sexmort = document.getElementById("sexmort")
     const video = document.getElementsByTagName("video")[0]
     video.style.display = "none"
 
@@ -201,6 +202,8 @@ function init() {
         const username = document.getElementById("username").value
         localStorage.setItem("username", username)
         document.getElementsByClassName("ui")[0].style.display = "none"
+        sexmort.style.display = "none"
+        document.getElementById("menu").style.background = "transparent"
 
         if (intro) {
             document.getElementsByTagName("table")[0].style.display = "block"

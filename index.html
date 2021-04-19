@@ -1,0 +1,88 @@
+<html>
+    <head>
+        <title>korrumz the game</title>
+        
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
+
+            html {
+                margin: 0 !important;
+                font-family: "Roboto", sans-serif;
+            }
+
+            body {
+                background-color: #202020;
+            }
+
+            div {
+                position: fixed;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                width: 100%;
+            }
+
+            canvas {
+                display: none;
+                position: fixed;
+            }
+
+            table {
+                position: fixed;
+            }
+            
+            video {
+                display: none;
+            }
+
+            .ui {
+                background-color: #fff;
+                height: 200px;
+                width: 500px;
+                border-radius: 10px;
+                flex-direction: column
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <th>Gracz</th>
+                <th>Pull requesty</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+        <canvas id="game"></canvas>
+
+        <div>
+            <video onended="init()" controls>
+                <source src="videos/Ortman.mp4">
+            </video>
+
+            <div class="ui">
+                <h1>korrumz the game</h1>
+                <input id="username" placeholder="Wpisz swój nick..." autocomplete="off">
+                <button onclick="init()">graj</button>
+            </div>
+        </div>
+
+        <script src="js/index.js"></script>
+    </body>
+</html>

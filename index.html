@@ -28,11 +28,13 @@
         </table>
 
         <canvas id="game"></canvas>
-	<video id="sexmort" autoplay="true" muted="true" loop="true" class="elmort">
-		<source src="videos/elmort_funi.mp4">
-	</video>
+
+        <video id="sexmort" autoplay="true" muted="true" loop="true" class="elmort">
+            <source src="videos/elmort_funi.mp4">
+        </video>
+
         <div id="menu">
-            <video onended="init()" controls>
+            <video id="intro" onended="init()" controls>
                 <source src="videos/Ortman.mp4">
             </video>
 

@@ -193,7 +193,7 @@ function init() {
     const gban = localStorage.getItem("gban")
 
     const sexmort = document.getElementById("sexmort")
-    const video = document.getElementsByTagName("video")[0]
+    const video = document.getElementById("intro")
     video.style.display = "none"
 
     if (gban) {

@@ -1,10 +1,11 @@
 const canvas = document.getElementById("game")
+const playerImages = 8
+
+let imageNumber = Math.floor(Math.random() * (playerImages - 1)) + 1
 
 function game(username) {
     const ctx = canvas.getContext("2d")
     const topEl = document.getElementsByTagName("tr")
-
-    const playerImages = 8
 
     canvas.width = innerWidth
     canvas.height = innerHeight
@@ -55,7 +56,7 @@ function game(username) {
         }
     }
 
-    const player = new Player(username, Math.floor(Math.random() * (canvas.width - 70)) + 70, Math.floor(Math.random() * (canvas.height - 70) + 70), 0, Math.floor(Math.random() * playerImages))
+    const player = new Player(username, Math.floor(Math.random() * (canvas.width - 70)) + 70, Math.floor(Math.random() * (canvas.height - 70) + 70), 0, imageNumber)
 
     const players = [player]
     const bugs = []
@@ -218,4 +219,25 @@ function init() {
     }
 }
 
+function leftArrow() {
+    imageNumber -= 1
+
+    if (imageNumber === 0) {
+        imageNumber = playerImages
+    }
+
+    document.getElementById("icon").src = `images/players/${imageNumber}.png`
+}
+
+function rightArrow() {
+    imageNumber += 1
+
+    if (imageNumber === playerImages) {
+        imageNumber = 1
+    }
+
+    document.getElementById("icon").src = `images/players/${imageNumber}.png`
+}
+
 if (localStorage.getItem("username")) document.getElementById("username").value = localStorage.getItem("username")
+document.getElementById("icon").src = `images/players/${imageNumber}.png`

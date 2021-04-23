@@ -1,5 +1,5 @@
 const canvas = document.getElementById("game")
-const playerImages = 8
+const playerImages = 20
 
 let imageNumber = Math.floor(Math.random() * (playerImages - 1)) + 1
 
@@ -19,7 +19,7 @@ function game(username) {
             this.imageNumber = imageNumber
 
             const image = new Image()
-            image.src = `images/players/${this.imageNumber}.png`
+            image.src = `images/player${this.imageNumber}.png`
 
             this.playerImg = image
         }
@@ -45,7 +45,7 @@ function game(username) {
             this.imageNumber = imageNumber
 
             const image = new Image()
-            image.src = `images/bugs/${this.imageNumber}.png`
+            image.src = `images/bug${this.imageNumber}.png`
 
             this.bugImg = image
         }
@@ -61,7 +61,7 @@ function game(username) {
     const players = [player]
     const bugs = []
 
-    const ws = new WebSocket("ws://127.0.0.1:8080")
+    const ws = new WebSocket("wss://ws.korrumzthegame.cf")
     let data
 
     function websocketHandler() {
@@ -209,6 +209,7 @@ function init() {
         if (intro) {
             document.getElementsByTagName("table")[0].style.display = "block"
             canvas.style.display = "block"
+            document.getElementsByTagName("table")[0].style.display = "block"
             game(username)
         } else {
             localStorage.setItem("intro", true)
@@ -226,18 +227,25 @@ function leftArrow() {
         imageNumber = playerImages
     }
 
-    document.getElementById("icon").src = `images/players/${imageNumber}.png`
+    document.getElementById("icon").src = `images/player${imageNumber}.png`
 }
 
 function rightArrow() {
     imageNumber += 1
 
-    if (imageNumber === playerImages) {
+    if (imageNumber === playerImages + 1) {
         imageNumber = 1
     }
 
-    document.getElementById("icon").src = `images/players/${imageNumber}.png`
+    document.getElementById("icon").src = `images/player${imageNumber}.png`
 }
 
 if (localStorage.getItem("username")) document.getElementById("username").value = localStorage.getItem("username")
-document.getElementById("icon").src = `images/players/${imageNumber}.png`
+document.getElementById("icon").src = `images/player${imageNumber}.png`
+
+if (typeof window.orientation !== "undefined") {
+    const body = document.getElementsByTagName("body")[0]
+    body.innerHTML = "TA GRA JEST DOSTEPNA TYLKO NA KĄKUTERY"
+    body.style.backgroundColor = "#fff"
+    body.style.fontSize = "100px"
+}

@@ -1,50 +1,72 @@
+const express = require("express")
 const WebSocket = require("ws")
+const path = require("path")
+
+const app = express()
 const wss = new WebSocket.Server({
     host: "0.0.0.0",
-    port: 8080
+    port: 6202
 })
+
+app.listen(6201, "0.0.0.0")
 
 const clients = {}
 let data
 
-const bugImages = 6
+const bugImages = 7
 const bugs = []
+let totalBugs = 0
 
-function getDistance(x1, y1, x2, y2) {
-    const xDistance = x2 - x1
-    const yDistance = y2 - y1
+const getDistance = (x1, y1, x2, y2) => { return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) }
 
-    return Math.sqrt(Math.pow(xDistance, 2) + Math.pow(yDistance, 2))
-}
+app.use("/css", express.static(path.join(__dirname, "css")))
+app.use("/images", express.static(path.join(__dirname, "images")))
+app.use("/js", express.static(path.join(__dirname, "js")))
+app.use("/videos", express.static(path.join(__dirname, "videos")))
 
-wss.on("connection", (ws) => {
-    setInterval(() => {
-        for (i = 0; i < 2; i++) {
-            if (bugs.length <= 40) {
-                const bug = {
-                    x: Math.floor(Math.random() * (1920 - 85)) + 85,
-                    y: Math.floor(Math.random() * (1080 - 50)) + 50,
-                    imageNumber: Math.floor(Math.random() * (bugImages - 1)) + 1
-                }
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "index.html"))
+})
 
-                data = {
-                    event: "new bug",
-                    data: bug
-                }
+setInterval(() => {
+    data = {
+        event: "anty kick"
+    }
 
-                bugs.push(bug)
+    for (client in clients)
+        clients[client].ws.send(JSON.stringify(data))
+}, 10000)
 
-                for (client in clients) {
-                    clients[client].ws.send(JSON.stringify(data))
-                }
+setInterval(() => {
+    for (i = 0; i < totalBugs; i++) {
+        if (bugs.length <= 40) {
+            const bug = {
+                x: Math.floor(Math.random() * (1920 - 85)) + 85,
+                y: Math.floor(Math.random() * (1080 - 50)) + 50,
+                imageNumber: Math.floor(Math.random() * (bugImages - 1)) + 1
+            }
+
+            data = {
+                event: "new bug",
+                data: bug
+            }
+
+            bugs.push(bug)
+
+            for (client in clients) {
+                clients[client].ws.send(JSON.stringify(data))
             }
         }
-    }, 5000)
+    }
+}, 3000)
+
+wss.on("connection", (ws) => {
+    totalBugs += 2
 
     ws.onmessage = (msg) => {
         try {
             msg = JSON.parse(msg.data)
-            
+
             let username = msg.data.username
 
             switch (msg.event) {
@@ -203,6 +225,7 @@ wss.on("connection", (ws) => {
                 }
             }
 
+            totalBugs -= 2
             delete clients[username]
         } catch(e) {}
     }

@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>korrumz the game</title>
+        <title>Korrumz The Game</title>
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
@@ -29,7 +29,7 @@
 
         <canvas id="game"></canvas>
 
-        <video id="sexmort" autoplay="true" muted="true" loop="true" class="elmort">
+        <video id="sexmort" class="elmort" autoplay="true" muted="true" loop="true">
             <source src="videos/elmort_funi.mp4">
         </video>
 
@@ -37,16 +37,17 @@
             <video id="intro" onended="init()" controls>
                 <source src="videos/Ortman.mp4">
             </video>
-<div class="ui">
-                <h1>Korrumz: The Game</h1>
-                <input id="username" placeholder="Zaprogramuj swój nick..." autocomplete="off">
+
+            <div class="ui">
+                <h1>Korrumz The Game</h1>
+                <input id="username" placeholder="Wpisz swój nick..." autocomplete="off">
                 <div>
-                <button id="leftArrow" onclick="leftArrow()">&lt;</button>
-                <img id="icon">
-                <button id="rightArrow" onclick="rightArrow()">&gt;</button>
+                    <button id="leftArrow" onclick="leftArrow()">&lt;</button>
+                    <img id="icon">
+                    <button id="rightArrow" onclick="rightArrow()">&gt;</button>
                 </div>
                 <button onclick="init()">Graj!</button>
-                </div>
+            </div>
         </div>
 
         <script src="js/index.js"></script>

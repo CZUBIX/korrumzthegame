@@ -1,0 +1,1 @@
+zajebista gra o korrumzie

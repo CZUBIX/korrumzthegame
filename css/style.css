@@ -49,14 +49,19 @@ canvas {
 
 table {
 	position: fixed;
-	backdrop-filter: blur(50px);
-	border: 1px solid #404040;
+	backdrop-filter: blur(5px);
 	background-color: #10101090;
 	color: white;
-	border-radius: 10px;
+	border-radius: 5px;
 	z-index: 0;
 	top: 10px;
 	left: 10px;
+	display: none;
+	padding: 7px;
+}
+
+h1 {
+	color: white;
 }
 
 div video {
@@ -70,19 +75,23 @@ div video {
 	position: fixed;
 }
 
+th {
+	text-align: left;
+}
 
 button {
-	padding: 20px 50px;
+	padding: 15px 45px;
 	background-color: #e67e22;
 	color: white;
 	font-size: 20px;
 	border: none;
 	border-radius: 10px;
 	transition: all 0.2s ease;
+	outline: none;
 }
 
 button:hover {
-	letter-spacing: 10px;
+	opacity: 0.8;
 }
 
 #leftArrow, #rightArrow {
@@ -91,12 +100,28 @@ button:hover {
 	border: none;
 	color: black;
 	padding: 0;
-	height: 50px;
-	width: 50px;
+	height: 30px;
+	width: 30px;
 	margin: 10px;
 	font-size: 20px;
 }
 
-h1 {
-	color: white;
+input {
+	width: 225px;
+	height: 25px;
+	border: 1px solid #202020;
+	border-radius: 5px;
+	outline: none;
+	font-size: 15px;
+}
+
+#korrumztopedal {
+	display: none;
+	position: fixed;
+	right: 0;
+	flex-direction: row;
+}
+
+#korrumztopedal img {
+	float: right;
 }

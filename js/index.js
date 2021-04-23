@@ -1,6 +1,10 @@
 const canvas = document.getElementById("game")
-const playerImages = 20
+const sexmort = document.getElementById("sexmort")
+const video = document.getElementById("intro")
+const muzyka = document.getElementById("muzyka")
+const musicswitcher = document.getElementById("mute")
 
+const playerImages = 20
 let imageNumber = Math.floor(Math.random() * (playerImages - 1)) + 1
 
 function game(username) {
@@ -193,8 +197,6 @@ function init() {
     const intro = localStorage.getItem("intro")
     const gban = localStorage.getItem("gban")
 
-    const sexmort = document.getElementById("sexmort")
-    const video = document.getElementById("intro")
     video.style.display = "none"
 
     if (gban) {
@@ -204,12 +206,16 @@ function init() {
         localStorage.setItem("username", username)
         document.getElementsByClassName("ui")[0].style.display = "none"
         sexmort.style.display = "none"
-        document.getElementById("menu").style.background = "transparent"
+        document.getElementById("menu").style.display = "none"
 
         if (intro) {
             document.getElementsByTagName("table")[0].style.display = "block"
             canvas.style.display = "block"
             document.getElementsByTagName("table")[0].style.display = "block"
+            document.getElementById("korrumztopedal").style.display = "block"
+            muzyka.volume = 0.01
+            musicswitcher.style.display = "block"
+            muzyka.play()
             game(username)
         } else {
             localStorage.setItem("intro", true)
@@ -238,6 +244,20 @@ function rightArrow() {
     }
 
     document.getElementById("icon").src = `images/player${imageNumber}.png`
+}
+
+function mute() {
+    if (muzyka.paused) {
+        musicswitcher.src = "images/speaker1.png"
+        muzyka.play()
+    } else {
+        musicswitcher.src = "images/speaker2.png"
+        muzyka.pause()
+    }
+}
+
+function newTab(url) {
+    open(url, "_blank").focus()
 }
 
 if (localStorage.getItem("username")) document.getElementById("username").value = localStorage.getItem("username")

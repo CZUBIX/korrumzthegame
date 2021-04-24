@@ -68,6 +68,8 @@ function game(username) {
     const ws = new WebSocket("wss://ws.korrumzthegame.cf")
     let data
 
+    const keyState = {}
+
     function websocketHandler() {
         ws.onopen = () => {
             data = {
@@ -151,31 +153,37 @@ function game(username) {
         canvas.height = innerHeight
     })
 
-    addEventListener("keypress", (key) => {
-        const speed = 30
+    addEventListener("keydown", (e) => {
+        keyState[e.code] = true
+    })
 
-        const events = {
-            "KeyW": () => {
-                if (player.y - player.playerImg.height >= 0)
-                    player.y -= speed
-            },
-            "KeyA": () => {
-                if (player.x - player.playerImg.width >= 0)
-                    player.x -= speed
-            },
-            "KeyS": () => {
-                if (player.y + player.playerImg.height <= canvas.height)
-                    player.y += speed
-            },
-            "KeyD": () => {
-                if (player.x + player.playerImg.width <= canvas.width)
-                    player.x += speed
-            }
-        }
+    addEventListener("keyup", (e) => {
+        keyState[e.code] = false
+    })
 
-        if (events.hasOwnProperty(key.code)) {
-            events[key.code]()
-            
+    function move() {
+        const speed = 5
+
+        const oldX = player.x
+        const oldY = player.y
+
+        if (keyState.KeyW)
+            if (player.y - player.playerImg.height >= 0)
+                player.y -= speed
+        
+        if (keyState.KeyA)
+            if (player.x - player.playerImg.width >= 0)
+                player.x -= speed
+
+        if (keyState.KeyS)
+            if (player.y + player.playerImg.height <= canvas.height)
+                player.y += speed
+        
+        if (keyState.KeyD)
+            if (player.x + player.playerImg.width <= canvas.width)
+                player.x += speed
+
+        if (!(player.x === oldX) || !(player.y === oldY)) {
             data = {
                 event: "move",
                 data: {
@@ -187,10 +195,11 @@ function game(username) {
 
             ws.send(JSON.stringify(data))
         }
-    })
+    }
 
     websocketHandler()
     animate()
+    setInterval(move, 10)
 }
 
 function init() {
@@ -206,9 +215,9 @@ function init() {
         localStorage.setItem("username", username)
         document.getElementsByClassName("ui")[0].style.display = "none"
         sexmort.style.display = "none"
-        document.getElementById("menu").style.display = "none"
 
         if (intro) {
+            document.getElementById("menu").style.display = "none"
             document.getElementsByTagName("table")[0].style.display = "block"
             canvas.style.display = "block"
             document.getElementsByTagName("table")[0].style.display = "block"

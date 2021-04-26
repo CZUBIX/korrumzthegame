@@ -17,32 +17,39 @@ const bugImages = 7
 const bugs = []
 let totalBugs = 0
 
-const getDistance = (x1, y1, x2, y2) => { return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) }
+const getDistance = (x1, y1, x2, y2) => Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
 
 app.use("/css", express.static(path.join(__dirname, "css")))
 app.use("/images", express.static(path.join(__dirname, "images")))
 app.use("/js", express.static(path.join(__dirname, "js")))
 app.use("/videos", express.static(path.join(__dirname, "videos")))
+app.use("/audio", express.static(path.join(__dirname, "audio")))
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"))
 })
 
 setInterval(() => {
-    data = {
-        event: "anty kick"
-    }
+    for (client in clients) {
+        client = clients[client]
 
-    for (client in clients)
-        clients[client].ws.send(JSON.stringify(data))
+        data = {
+            event: "anty kick",
+            data: {
+                username: client.username
+            }
+        }
+
+        client.ws.send(JSON.stringify(data))
+    }
 }, 10000)
 
 setInterval(() => {
     for (i = 0; i < totalBugs; i++) {
         if (bugs.length <= 40) {
             const bug = {
-                x: Math.floor(Math.random() * (1920 - 85)) + 85,
-                y: Math.floor(Math.random() * (1080 - 50)) + 50,
+                x: Math.floor(Math.random() * (1920 - 60)) + 60,
+                y: Math.floor(Math.random() * (1007 - 60)) + 60,
                 imageNumber: Math.floor(Math.random() * (bugImages - 1)) + 1
             }
 

@@ -1,8 +1,6 @@
 const express = require("express")
 const WebSocket = require("ws")
 const path = require("path")
-const { json } = require("express")
-const { isNumber } = require("util")
 
 const app = express()
 const wss = new WebSocket.Server({
@@ -255,13 +253,13 @@ wss.on("connection", (ws) => {
                         }
 
                         client.ws.send(JSON.stringify(data))
-                        totalBugs -= 2
                     })
                 }
             }
 
             usernames.forEach(username => {
                 delete clients[username]
+                totalBugs -= 2
             })
         } catch(e) {}
     }

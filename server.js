@@ -13,6 +13,7 @@ app.listen(6201, "0.0.0.0")
 const clients = {}
 let data
 
+const playerImages = 20
 const bugImages = 7
 const bugs = []
 let totalBugs = 0
@@ -78,8 +79,8 @@ wss.on("connection", (ws) => {
 
             switch (msg.event) {
                 case "new player":
-                    if (clients.hasOwnProperty(username)) {
-                        username = username + Math.floor(Math.random() * 100)
+                    if (clients.hasOwnProperty(username) || !username) {
+                        username = (username || "player") + Math.floor(Math.random() * 100)
 
                         data = {
                             event: "new username",
@@ -99,7 +100,7 @@ wss.on("connection", (ws) => {
                     clients[username].canvasWidth = msg.data.canvasWidth
                     clients[username].canvasHeight = msg.data.canvasHeight
                     clients[username].pullRequests = 0
-                    clients[username].imageNumber = msg.data.imageNumber
+                    clients[username].imageNumber = msg.data.imageNumber || Math.floor(Math.random() * (playerImages - 1)) + 1
 
                     for (client in clients) {
                         client = clients[client]

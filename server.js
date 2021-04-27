@@ -2,6 +2,7 @@ const express = require("express")
 const WebSocket = require("ws")
 const path = require("path")
 const { json } = require("express")
+const { isNumber } = require("util")
 
 const app = express()
 const wss = new WebSocket.Server({
@@ -94,7 +95,7 @@ wss.on("connection", (ws) => {
                         ws.send(JSON.stringify(data))
                     }
 
-                    if (!msg.data.imageNumber) {
+                    if (!(Number.isInteger(msg.data.imageNumber)) || (msg.data.imageNumber > playerImages) || (msg.data.imageNumber < 1)) {
                         imageNumber = Math.floor(Math.random() * (playerImages - 1)) + 1
 
                         data = {
@@ -231,33 +232,33 @@ wss.on("connection", (ws) => {
 
     ws.onclose = () => {
         try {
-            let username
+            const usernames = []
 
             for (client in clients) {
                 client = clients[client]
 
                 if (client.ws === ws) {
-                    username = client.username
+                    usernames.push(client.username)
                 }
             }
 
             for (client in clients) {
                 client = clients[client]
 
-                if (!(client.username === username)) {
-                    data = {
-                        event: "player disconnected",
-                        data: {
-                            username: username
+                if (!usernames.includes(client.username)) {
+                    usernames.forEach(username => {
+                        data = {
+                            event: "player disconnected",
+                            data: {
+                                username: username
+                            }
                         }
-                    }
 
-                    client.ws.send(JSON.stringify(data))
+                        client.ws.send(JSON.stringify(data))
+                        delete clients[username]
+                    })
                 }
             }
-
-            totalBugs -= 2
-            delete clients[username]
         } catch(e) {}
     }
 })

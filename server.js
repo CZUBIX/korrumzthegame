@@ -256,6 +256,7 @@ wss.on("connection", (ws) => {
 
                         client.ws.send(JSON.stringify(data))
                         delete clients[username]
+                        totalBugs -= 2
                     })
                 }
             }

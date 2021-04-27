@@ -60,7 +60,7 @@ function game(username) {
         }
     }
 
-    const player = new Player(username, Math.floor(Math.random() * (canvas.width - 70)) + 70, Math.floor(Math.random() * (canvas.height - 70) + 70), 0, imageNumber)
+    const player = new Player(username, Math.floor(Math.random() * (canvas.width - 70)) + 70, Math.floor(Math.random() * (canvas.height - 70)) + 70, 0, imageNumber)
 
     const players = [player]
     const bugs = []
@@ -98,6 +98,10 @@ function game(username) {
 
                 case "new username":
                     player.username = msg.data.username
+                    break
+
+                case "new image":
+                    player.imageNumber = msg.data.imageNumber
                     break
 
                 case "move":
@@ -151,6 +155,19 @@ function game(username) {
     addEventListener("resize", () => {
         canvas.width = innerWidth
         canvas.height = innerHeight
+        player.x = Math.floor(Math.random() * (canvas.width - 70)) + 70
+        player.y = Math.floor(Math.random() * (canvas.height - 70)) + 70
+
+        data = {
+            event: "new size",
+            data: {
+                username: player.username,
+                canvasWidth: canvas.width,
+                canvasHeight: canvas.height
+            }
+        }
+
+        ws.send(JSON.stringify(data))
     })
 
     addEventListener("keydown", (e) => {

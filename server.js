@@ -217,6 +217,14 @@ wss.on("connection", (ws) => {
                     }
 
                     break
+
+                case "new size":
+                    if (ws === clients[username].ws) {
+                        clients[username].canvasWidth = msg.data.canvasWidth
+                        clients[username].canvasHeight = msg.data.canvasHeight
+                    }
+
+                    break
             }
         } catch(e) {}
     }

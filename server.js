@@ -1,6 +1,7 @@
 const express = require("express")
 const WebSocket = require("ws")
 const path = require("path")
+const { json } = require("express")
 
 const app = express()
 const wss = new WebSocket.Server({
@@ -76,6 +77,7 @@ wss.on("connection", (ws) => {
             msg = JSON.parse(msg.data)
 
             let username = msg.data.username
+            let imageNumber = msg.data.imageNumber
 
             switch (msg.event) {
                 case "new player":
@@ -92,6 +94,19 @@ wss.on("connection", (ws) => {
                         ws.send(JSON.stringify(data))
                     }
 
+                    if (!msg.data.imageNumber) {
+                        imageNumber = Math.floor(Math.random() * (playerImages - 1)) + 1
+
+                        data = {
+                            event: "new image",
+                            data: {
+                                imageNumber: imageNumber
+                            }
+                        }
+
+                        ws.send(JSON.stringify(data))
+                    }
+
                     clients[username] = {}
                     clients[username].ws = ws
                     clients[username].username = username
@@ -100,7 +115,7 @@ wss.on("connection", (ws) => {
                     clients[username].canvasWidth = msg.data.canvasWidth
                     clients[username].canvasHeight = msg.data.canvasHeight
                     clients[username].pullRequests = 0
-                    clients[username].imageNumber = msg.data.imageNumber || Math.floor(Math.random() * (playerImages - 1)) + 1
+                    clients[username].imageNumber = imageNumber
 
                     for (client in clients) {
                         client = clients[client]

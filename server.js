@@ -255,11 +255,14 @@ wss.on("connection", (ws) => {
                         }
 
                         client.ws.send(JSON.stringify(data))
-                        delete clients[username]
                         totalBugs -= 2
                     })
                 }
             }
+
+            usernames.forEach(username => {
+                delete clients[username]
+            })
         } catch(e) {}
     }
 })

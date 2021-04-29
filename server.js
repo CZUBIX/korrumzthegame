@@ -259,8 +259,8 @@ wss.on("connection", (ws) => {
 
             usernames.forEach(username => {
                 delete clients[username]
+                totalBugs -= 2
             })
         } catch(e) {}
-        totalBugs -= 2
     }
 })

@@ -69,8 +69,6 @@ setInterval(() => {
 }, 3000)
 
 wss.on("connection", (ws) => {
-    totalBugs += 2
-
     ws.onmessage = (msg) => {
         try {
             msg = JSON.parse(msg.data)
@@ -156,6 +154,8 @@ wss.on("connection", (ws) => {
 
                         ws.send(JSON.stringify(data))
                     })
+
+                    totalBugs += 2
 
                     break
 

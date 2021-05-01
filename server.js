@@ -16,7 +16,6 @@ let data
 const playerImages = 20
 const bugImages = 7
 const bugs = []
-let totalBugs = 0
 
 const getDistance = (x1, y1, x2, y2) => Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
 
@@ -46,7 +45,7 @@ setInterval(() => {
 }, 10000)
 
 setInterval(() => {
-    for (i = 0; i < totalBugs; i++) {
+    for (i = 0; i < Object.keys(clients).length * 2; i++) {
         if (bugs.length <= 40) {
             const bug = {
                 x: Math.floor(Math.random() * (1920 - 60)) + 60,
@@ -155,8 +154,6 @@ wss.on("connection", (ws) => {
                         ws.send(JSON.stringify(data))
                     })
 
-                    totalBugs += 2
-
                     break
 
                 case "move":
@@ -259,7 +256,6 @@ wss.on("connection", (ws) => {
 
             usernames.forEach(username => {
                 delete clients[username]
-                totalBugs -= 2
             })
         } catch(e) {}
     }

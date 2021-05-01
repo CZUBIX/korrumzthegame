@@ -289,7 +289,7 @@ function newTab(url) {
 if (localStorage.getItem("username")) document.getElementById("username").value = localStorage.getItem("username")
 document.getElementById("icon").src = `images/player${imageNumber}.png`
 
-if (typeof window.orientation !== "undefined") {
+if (typeof orientation !== "undefined") {
     const body = document.getElementsByTagName("body")[0]
     body.innerHTML = "TA GRA JEST DOSTEPNA TYLKO NA KĄKUTERY"
     body.style.backgroundColor = "#fff"

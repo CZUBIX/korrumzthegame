@@ -239,7 +239,7 @@ function init() {
             canvas.style.display = "block"
             document.getElementsByTagName("table")[0].style.display = "block"
             document.getElementById("korrumztopedal").style.display = "block"
-            muzyka.volume = 0.01
+            muzyka.volume = 0.03
             musicswitcher.style.display = "block"
             muzyka.play()
             game(username)
@@ -291,7 +291,8 @@ document.getElementById("icon").src = `images/player${imageNumber}.png`
 
 if (typeof orientation !== "undefined") {
     const body = document.getElementsByTagName("body")[0]
-    body.innerHTML = "TA GRA JEST DOSTEPNA TYLKO NA KĄKUTERY"
+    body.innerHTML = ""
     body.style.backgroundColor = "#fff"
     body.style.fontSize = "100px"
+    newTab("https://github.com/CZUBIX/korrumzthegamemobile")
 }

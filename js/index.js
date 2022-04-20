@@ -65,7 +65,7 @@ function game(username) {
     const players = [player]
     const bugs = []
 
-    const ws = new WebSocket("wss://ws.korrumzthegame.cf")
+    const ws = new WebSocket("wss://ws.korrumzthegame.wtf")
     let data
 
     const keyState = {}
